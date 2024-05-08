@@ -591,7 +591,7 @@ def create_groups(contrast: list,region_sets: Union[Dict[str, pr.PyRanges], Dict
             background_sequences.to_csv(path_to_regions_fasta, header=False, index=False, sep='\n')
         # Motifs should include .cb
         motifs = [motif + '.cb' for motif in motifs]
-        background  = cluster_buster(cbust_path, path_to_motifs, region_sets=region_sets, path_to_regions_fasta=path_to_regions_fasta, n_cpu=n_cpu, motifs=motifs, **kwargs)
+        background  = cluster_buster(cbust_path, path_to_motifs, region_sets=region_sets, path_to_genome_fasta=path_to_genome_fasta,path_to_regions_fasta=path_to_regions_fasta, n_cpu=n_cpu, motifs=motifs, **kwargs)
     return [foreground, background]
  
 ## Ray function for getting LogFC, pAdj and motif hits between groups   
