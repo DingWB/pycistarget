@@ -85,10 +85,10 @@ def cluster_buster(cbust_path: str,
     log.info('Scoring sequences')
     if n_cpu > 1:
         ray.init(num_cpus=n_cpu, **kwargs)
-        crm_scores = ray.get([run_cluster_buster_for_motif_ray.remote(cbust_path, path_to_regions_fasta, path_to_motifs+motifs[i], motifs[i], i, len(motifs), verbose) for i in range(len(motifs))])
+        crm_scores = ray.get([run_cluster_buster_for_motif_ray.remote(cbust_path, path_to_regions_fasta, os.path.join(path_to_motifs,motifs[i]), motifs[i], i, len(motifs), verbose) for i in range(len(motifs))])
         ray.shutdown()
     else:
-        crm_scores = [run_cluster_buster_for_motif(cbust_path, path_to_regions_fasta, path_to_motifs+motifs[i], motifs[i], i, len(motifs), verbose) for i in range(len(motifs))]
+        crm_scores = [run_cluster_buster_for_motif(cbust_path, path_to_regions_fasta, os.path.join(path_to_motifs,motifs[i]), motifs[i], i, len(motifs), verbose) for i in range(len(motifs))]
     crm_df = pd.concat(crm_scores, axis=1, sort=False).fillna(0).T
     # Remove .cb from motifs names
     crm_df.index = [x.replace('.cb','') for x in crm_df.index.tolist()]
