@@ -362,7 +362,7 @@ class DEM():
         
         # Get region groups
         log.info('Creating contrast groups')
-        region_groups = [create_groups(contrast = contrasts[x],
+        region_groups = [create_groups(contrast = contrasts[x],region_sets=self.region_sets,
                                    region_sets_names = region_sets_names,
                                    max_bg_regions = self.max_bg_regions,
                                    path_to_genome_fasta = self.path_to_genome_fasta,
@@ -483,7 +483,7 @@ def shuffle_sequence(sequence: str):
     return shuffled_sequence.tobytes().decode('utf-8')
     
 ## Create groups to compare
-def create_groups(contrast: list,
+def create_groups(contrast: list,region_sets: Union[Dict[str, pr.PyRanges], Dict[str, List]] = None,
                   region_sets_names: list,
                   max_bg_regions: int,
                   path_to_genome_fasta: str,
@@ -591,7 +591,7 @@ def create_groups(contrast: list,
             background_sequences.to_csv(path_to_regions_fasta, header=False, index=False, sep='\n')
         # Motifs should include .cb
         motifs = [motif + '.cb' for motif in motifs]
-        background  = cluster_buster(cbust_path, path_to_motifs, path_to_regions_fasta=path_to_regions_fasta, n_cpu=n_cpu, motifs=motifs, **kwargs)
+        background  = cluster_buster(cbust_path, path_to_motifs, region_sets=region_sets, path_to_regions_fasta=path_to_regions_fasta, n_cpu=n_cpu, motifs=motifs, **kwargs)
     return [foreground, background]
  
 ## Ray function for getting LogFC, pAdj and motif hits between groups   
