@@ -67,7 +67,7 @@ def cluster_buster(cbust_path: str,
         for key in region_sets.keys():
             fa_list=pr.get_fasta(region_sets[key], path_to_genome_fasta).tolist() #series to list, length = len(region_sets[key])
             # print(fa_list,region_sets[key])
-            pr_sequence_list.append(pd.DataFrame([region_sets[key], fa_list], index=['Name', 'Sequence'], columns=region_sets[key]))
+            pr_sequence_list.append(pd.DataFrame([region_sets[key], fa_list], index=['Name', 'Sequence']), columns=region_sets[key].df.apply(lambda x:'-'.join(x.astype(str).tolist()),axis=1).tolist())
             # columns are: chr1-start-end, chr2-start-end,...
         seq_df = pd.concat(pr_sequence_list, axis=1)
         seq_df = seq_df.loc[:,~seq_df.columns.duplicated()]
