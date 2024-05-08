@@ -483,7 +483,7 @@ def shuffle_sequence(sequence: str):
     return shuffled_sequence.tobytes().decode('utf-8')
     
 ## Create groups to compare
-def create_groups(contrast: list,region_sets: Union[Dict[str, pr.PyRanges], Dict[str, List]] = None,
+def create_groups(contrast: list,region_sets: Union[Dict[str, pr.PyRanges], Dict[str, List]],
                   region_sets_names: list,
                   max_bg_regions: int,
                   path_to_genome_fasta: str,
