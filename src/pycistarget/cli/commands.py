@@ -196,6 +196,8 @@ def run_dem_command(
     # Read genome annotation, if needed
     if path_to_genome_annotation is not None:
         genome_annotation = pd.read_table(path_to_genome_annotation)
+    else:
+        genome_annotation=None
     
     # Get foreground and background regions for DEM analysis
     foreground_regions, background_regions = get_foreground_and_background_regions(
